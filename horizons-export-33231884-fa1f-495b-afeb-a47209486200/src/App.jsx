@@ -8,7 +8,6 @@ import { usePersistentState } from "@/hooks/usePersistentState";
 import AuthModal from "@/components/auth/AuthModal";
 import LoginForm from "@/components/auth/LoginForm";
 import SignupForm from "@/components/auth/SignupForm";
-import { DialogTrigger } from "@/components/ui/dialog"; // Keep import for potential future use or if other components rely on it
 
 const App = () => {
   const [gameSettings, setGameSettings] = usePersistentState('ggds_gameSettings_v15', null);
@@ -40,19 +39,12 @@ const App = () => {
     setIsAuthenticated(true);
   };
 
-  if (!isAuthenticated) {
- return (
- <>
- <AuthModal
- onAuthSuccess={handleAuthSuccess}
- />
- </>
- );
-  }
-
   if (!gameSettings) {
     return (
       <>
+ <AuthModal
+ onAuthSuccess={handleAuthSuccess}
+ />
         <GameSetupScreen onSetupComplete={handleGameSetupComplete} />
         <Toaster />
       </>
@@ -61,6 +53,9 @@ const App = () => {
 
   return (
     <GameStateProvider gameSettings={gameSettings} onResetToSetup={handleResetToSetup}>
+ <AuthModal
+ onAuthSuccess={handleAuthSuccess}
+ />
       <GameView />
       <Toaster />
     </GameStateProvider>
