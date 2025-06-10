@@ -5,9 +5,13 @@ import GameStateProvider from "@/context/GameStateProvider";
 import GameView from "@/components/views/GameView";
 import GameSetupScreen from "@/components/views/GameSetupScreen";
 import { usePersistentState } from "@/hooks/usePersistentState";
+import AuthModal from "@/components/auth/AuthModal";
+import LoginForm from "@/components/auth/LoginForm";
+import SignupForm from "@/components/auth/SignupForm";
 
 const App = () => {
   const [gameSettings, setGameSettings] = usePersistentState('ggds_gameSettings_v15', null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const handleGameSetupComplete = (settings) => {
     setGameSettings(settings);
@@ -30,6 +34,16 @@ const App = () => {
     localStorage.removeItem('ggds_currSent_v15');
     localStorage.removeItem('ggds_absScore_v15');
   };
+
+  const handleAuthSuccess = () => {
+    setIsAuthenticated(true);
+  };
+
+  if (!isAuthenticated) {
+    return (
+      <AuthModal onAuthSuccess={handleAuthSuccess} LoginForm={LoginForm} SignupForm={SignupForm} />
+    );
+  }
 
   if (!gameSettings) {
     return (
