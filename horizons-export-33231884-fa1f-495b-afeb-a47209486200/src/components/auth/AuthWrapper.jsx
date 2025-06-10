@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import AuthModal from './AuthModal';
 import LoginForm from './LoginForm';
 import SignupForm from './SignupForm';
-import App from '../App';
+import App from '../../App';
 
 const AuthWrapper = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
